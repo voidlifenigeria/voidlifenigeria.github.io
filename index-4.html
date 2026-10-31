@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0716">
+<title>Void Life Nigeria</title>
+<style>
+:root{
+  --bg:#0c0716;
+  --bg2:#150b26;
+  --line:rgba(255,255,255,.12);
+  --text:#f5f0ff;
+  --mute:#a99bc4;
+  --pink:#ff4d9d;
+  --violet:#a56cf0;
+  --teal:#5eead4;
+  --live:#ff3b5c;
+  --grad:linear-gradient(100deg,#ff4d9d,#a56cf0);
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,Inter,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html,body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.45;-webkit-tap-highlight-color:transparent}
+body{background:radial-gradient(900px 500px at 85% 8%,rgba(150,70,200,.28),transparent 60%),radial-gradient(700px 500px at 0% 40%,rgba(80,40,140,.25),transparent 60%),var(--bg);min-height:100vh}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px 100px}
+
+/* header */
+header{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;background:rgba(10,6,20,.92);backdrop-filter:blur(8px)}
+.mark{width:46px;height:46px;border-radius:14px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;flex:none}
+.brand{font-weight:800;font-size:19px;letter-spacing:-.4px;flex:1;min-width:0;line-height:1.1}
+.brand b{color:var(--pink)}
+.pill{border:1px solid var(--line);border-radius:999px;padding:10px 18px;font-weight:700;font-size:15px;white-space:nowrap}
+.pill.fill{background:var(--grad);border-color:transparent}
+.coins{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-weight:700;font-size:14px}
+@media(max-width:480px){header{gap:8px}.brand{font-size:13px}.pill{padding:9px 11px;font-size:13px}.mark{width:38px;height:38px;font-size:19px}.wrap{padding:0 16px 100px}}
+
+.view{display:none;padding-top:30px}
+.view.on{display:block}
+
+/* hero */
+.eyebrow{color:var(--teal);font-weight:800;letter-spacing:.3em;font-size:14px}
+h1{font-size:clamp(40px,11vw,64px);line-height:1.05;letter-spacing:-1.5px;margin:14px 0 18px;font-weight:800}
+h1 span{background:linear-gradient(100deg,#ff4d9d,#a56cf0 50%,#5eead4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mute);font-size:20px;max-width:30em}
+.row{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:16px 28px;border-radius:999px;font-weight:700;font-size:18px;min-height:54px}
+.btn.main{background:var(--grad)}
+.btn.out{border:1px solid var(--line);background:rgba(255,255,255,.03)}
+.btn.sm{padding:10px 18px;min-height:42px;font-size:15px}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.45}
+
+/* card */
+.hcard{border:1px solid var(--line);border-radius:32px;padding:26px 22px;background:radial-gradient(300px 250px at 90% 20%,rgba(255,77,157,.25),transparent 70%),rgba(255,255,255,.03);margin-top:6px}
+.hc-top{display:flex;gap:18px;align-items:flex-start}
+.hc-ico{width:96px;height:96px;border-radius:26px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:30px;flex:none;margin-top:14px;color:rgba(255,255,255,.8)}
+.livebadge{display:inline-flex;align-items:center;gap:8px;background:var(--live);font-weight:800;padding:10px 16px;border-radius:12px;font-size:16px}
+.livebadge i{width:9px;height:9px;border-radius:50%;background:#fff;animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.3}}
+.hc-top h3{font-size:25px;line-height:1.25;margin:12px 0 6px}
+.hc-top p{color:var(--mute);font-size:17px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.tile{border:1px solid var(--line);background:rgba(255,255,255,.06);border-radius:18px;padding:12px;text-align:left;min-height:84px}
+.tile span{display:block;font-size:26px;margin-bottom:4px}
+.tile small{font-size:15px;color:var(--text)}
+
+/* rooms */
+.sechead{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin:48px 0 6px}
+h2{font-size:30px;letter-spacing:-.8px}
+.demo{background:var(--live);font-weight:800;font-size:13px;letter-spacing:.04em;padding:10px 16px;border-radius:12px;white-space:nowrap}
+.sub{color:var(--mute);font-size:18px;margin-bottom:16px}
+.chips{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:14px}
+.chip{flex:none;border:1px solid var(--line);border-radius:999px;padding:10px 18px;color:var(--mute);font-size:16px}
+.chip.on{background:var(--grad);border-color:transparent;color:#fff;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(min-width:620px){.grid{grid-template-columns:repeat(3,1fr)}}
+.room{text-align:left;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:rgba(255,255,255,.04)}
+.thumb{aspect-ratio:3/4;position:relative;display:flex;align-items:center;justify-content:center;font-size:68px;font-weight:800;color:rgba(255,255,255,.85)}
+.tag{position:absolute;top:10px;left:10px;background:var(--live);font-size:12px;font-weight:800;padding:3px 9px;border-radius:7px;color:#fff}
+.views{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.6);font-size:12px;padding:3px 9px;border-radius:7px;color:#fff}
+.meta{padding:12px}
+.meta b{display:block;font-size:16px}
+.meta small{color:var(--mute);font-size:13px}
+
+.ad{border:1px dashed rgba(165,108,240,.5);border-radius:16px;padding:14px;text-align:center;color:var(--mute);font-size:14px;margin:20px 0;background:rgba(165,108,240,.06)}
+.ad b{color:var(--violet);display:block;font-size:12px;margin-bottom:2px}
+
+/* watch */
+.topbar{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.back{width:44px;height:44px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.stage{position:relative;border-radius:26px;overflow:hidden;aspect-ratio:3/4;max-height:62vh;width:100%;display:flex;align-items:center;justify-content:center;border:1px solid var(--line)}
+.stage .big{font-size:120px;font-weight:800;color:rgba(255,255,255,.8)}
+.stage .pulse{position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.2),transparent 60%);animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.3}}
+.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.float{position:absolute;left:50%;bottom:20%;transform:translateX(-50%);font-size:46px;animation:rise 1.6s ease-out forwards;pointer-events:none;text-align:center;text-shadow:0 2px 12px #000}
+.float small{display:block;font-size:14px;font-weight:700;color:#fff}
+@keyframes rise{from{opacity:1;transform:translate(-50%,0)}to{opacity:0;transform:translate(-50%,-170px)}}
+.chat{margin-top:14px;height:160px;overflow-y:auto;border:1px solid var(--line);border-radius:18px;padding:12px;background:rgba(0,0,0,.3);font-size:15px}
+.chat p{margin-bottom:6px}
+.chat b{color:var(--pink)}
+.chat p.gift{color:var(--teal)}
+.send{display:flex;gap:10px;margin-top:12px}
+.send input,.field{flex:1;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:14px;padding:14px;color:var(--text);font:inherit;min-width:0;width:100%}
+.gifts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;max-height:250px;overflow-y:auto;padding-right:2px}
+.gbtn{border:1px solid var(--line);border-radius:18px;padding:10px 2px;background:rgba(255,255,255,.05);text-align:center}
+.gbtn span{display:block;font-size:26px}
+.gbtn small{color:var(--teal);font-size:12px;font-weight:700}
+.gbtn em{display:block;font-style:normal;font-size:11px;color:var(--mute)}
+.flash{position:absolute;inset:0;background:radial-gradient(circle,rgba(255,77,157,.55),transparent 70%);animation:fl 1.6s ease-out forwards;pointer-events:none}
+@keyframes fl{from{opacity:1}to{opacity:0}}
+.vnote{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.55);padding:6px 14px;border-radius:999px;font-size:13px;white-space:nowrap}
+
+/* panels */
+.panel{border:1px solid var(--line);border-radius:24px;padding:18px;background:rgba(255,255,255,.04);margin-bottom:16px}
+.stat{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+.stat:last-child{border:0}
+.stat span{color:var(--mute)}
+.stat b{font-size:26px}
+.ladder{display:flex;gap:6px;margin-top:12px}
+.ladder i{flex:1;height:7px;border-radius:4px;background:rgba(255,255,255,.12)}
+.ladder i.on{background:var(--grad)}
+.note{color:var(--mute);font-size:14px;margin-top:10px}
+input[type=range]{width:100%;accent-color:var(--pink);margin-top:12px}
+
+/* modal + overlays */
+.overlay{position:fixed;inset:0;background:rgba(5,2,12,.9);z-index:60;display:none;align-items:center;justify-content:center;padding:20px}
+.overlay.on{display:flex}
+.modal{width:100%;max-width:420px;background:#170d2a;border:1px solid var(--line);border-radius:28px;padding:24px;position:relative}
+.modal h3{font-size:26px;margin-bottom:4px}
+.modal .field{margin-top:12px}
+.tabs{display:flex;gap:8px;margin:14px 0 4px}
+.close{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line)}
+.check{display:flex;gap:10px;align-items:flex-start;margin-top:14px;color:var(--mute);font-size:14px}
+.check input{margin-top:4px;accent-color:var(--pink);width:18px;height:18px}
+.err{color:#ff8aa0;font-size:14px;margin-top:10px;min-height:18px}
+#adBox{flex-direction:column;text-align:center}
+#adBox .count{font-size:84px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+#toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--grad);padding:12px 20px;border-radius:999px;font-weight:700;font-size:15px;z-index:80;opacity:0;pointer-events:none;transition:opacity .2s;max-width:92vw;text-align:center}
+#toast.on{opacity:1}
+
+nav{position:fixed;bottom:0;left:0;right:0;z-index:30;background:rgba(10,6,20,.95);border-top:1px solid var(--line);backdrop-filter:blur(8px)}
+nav .in{display:flex;max-width:760px;margin:0 auto}
+nav button{flex:1;padding:10px 4px 14px;color:var(--mute);font-size:13px;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button span{font-size:20px}
+nav button.on{color:var(--pink)}
+@media(prefers-reduced-motion:reduce){.stage .pulse,.float,.livebadge i{animation:none}}
+
+/* golden coin */
+.coin{display:inline-block;width:20px;height:20px;border-radius:50%;position:relative;flex:none;vertical-align:-4px;
+  background:radial-gradient(circle at 32% 28%,#fff6c2 0,#ffd84a 26%,#e6a800 62%,#8f5d00 100%);
+  box-shadow:inset 0 0 0 2px rgba(255,240,160,.95),inset 0 0 0 3.5px #b57f00,0 0 10px rgba(255,200,40,.55)}
+.coin::after{content:"V";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#8a5600;text-shadow:0 1px 0 rgba(255,255,255,.55)}
+.coin.sm{width:14px;height:14px;box-shadow:inset 0 0 0 1.5px rgba(255,240,160,.95),inset 0 0 0 2.5px #b57f00,0 0 6px rgba(255,200,40,.5)}
+.coin.sm::after{font-size:8px}
+.stat .coin{width:26px;height:26px;margin-right:6px;vertical-align:-5px}
+.stat .coin::after{font-size:14px}
+.coins .coin,.stat .coin{animation:flip 3.6s ease-in-out infinite}
+@keyframes flip{0%,60%,100%{transform:scaleX(1)}80%{transform:scaleX(.08)}}
+
+/* animated purple slashes background */
+.bgfx{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.bgfx .s1,.bgfx .s2{position:absolute;inset:0}
+.bgfx .s1{background-image:linear-gradient(135deg,transparent 0 46%,rgba(165,108,240,.20) 46% 50%,transparent 50% 100%);background-size:130px 130px;animation:drift1 26s linear infinite}
+.bgfx .s2{background-image:linear-gradient(135deg,transparent 0 47%,rgba(255,77,157,.13) 47% 49%,transparent 49% 100%);background-size:240px 240px;animation:drift2 44s linear infinite}
+.bgfx .beam{position:absolute;top:-30%;left:-60%;width:38%;height:160%;transform:rotate(22deg);background:linear-gradient(90deg,transparent,rgba(165,108,240,.22),rgba(255,77,157,.12),transparent);filter:blur(6px);animation:beam 11s ease-in-out infinite}
+.bgfx .beam.b2{animation-delay:5.5s;width:22%;opacity:.8}
+@keyframes drift1{to{background-position:130px 0}}
+@keyframes drift2{to{background-position:-240px 0}}
+@keyframes beam{0%{left:-60%;opacity:0}15%{opacity:1}70%{opacity:1}100%{left:130%;opacity:0}}
+.wrap{position:relative;z-index:1}
+@media(prefers-reduced-motion:reduce){.bgfx .s1,.bgfx .s2,.bgfx .beam,.coins .coin,.stat .coin{animation:none}}
+</style>
+</head>
+<body>
+<div class="bgfx" aria-hidden="true"><div class="s1"></div><div class="s2"></div><div class="beam"></div><div class="beam b2"></div></div>
+<div class="wrap">
+
+<header>
+  <div class="mark">V</div>
+  <div class="brand">VOID LIFE <b>NIGERIA</b></div>
+  <button class="coins" id="coinBtn" aria-label="Wallet" hidden><i class="coin"></i><span id="coinTop">0</span></button>
+  <button class="pill" id="loginBtn">Log in</button>
+  <button class="pill fill" id="joinBtn">Join Void Life</button>
+  <button class="pill" id="logoutBtn" hidden>Log out</button>
+</header>
+
+<!-- HOME -->
+<main class="view on" id="v-home">
+  <p class="eyebrow">YOUR WORLD. YOUR STAGE.</p>
+  <h1>Meet the world.<br><span>Live your moment.</span></h1>
+  <p class="lead" id="lead">Discover live conversations, meet new people, share your talent, and build your community, starting in Nigeria and reaching everywhere.</p>
+  <div class="row">
+    <button class="btn main" id="exploreBtn">Explore live rooms ↗</button>
+    <button class="btn out" data-go="live">+ Go live</button>
+  </div>
+
+  <div class="hcard">
+    <div class="hc-top">
+      <div class="hc-ico">◉</div>
+      <div>
+        <span class="livebadge"><i></i>LIVE NOW</span>
+        <h3>Your next connection is live.</h3>
+        <p>Creators • Conversations • Culture</p>
+      </div>
+    </div>
+    <div class="tiles">
+      <button class="tile" id="tGlobal"><span>🌍</span><small>Meet globally</small></button>
+      <button class="tile" data-go="live"><span>🎙️</span><small>Go live</small></button>
+      <button class="tile" data-go="wallet"><span>💜</span><small>Support creators</small></button>
+    </div>
+  </div>
+
+  <div class="sechead" id="rooms">
+    <h2>Live right now</h2>
+    <span class="demo" id="demoBadge">DEMO FEED</span>
+  </div>
+  <p class="sub">Find a room that matches your vibe.</p>
+  <div class="chips" id="chips"></div>
+  <div class="grid" id="grid"></div>
+  <div class="ad"><b>Ad</b>Sponsored space. Advertisers pay for every view.</div>
+</main>
+
+<!-- WATCH -->
+<section class="view" id="v-watch">
+  <div class="topbar">
+    <button class="back" id="backHome" aria-label="Back">←</button>
+    <div><b id="wName" style="font-size:18px"></b><div class="note" id="wSub" style="margin:0"></div></div>
+  </div>
+  <div class="stage" id="stage"><div class="pulse"></div><div class="big" id="wBig"></div><div class="vnote" id="vnote" hidden>Live video comes in the next update</div></div>
+  <div class="ad" style="margin:14px 0"><b>Ad</b>Banner ad shows here while people watch.</div>
+  <div class="chat" id="chat" aria-live="polite"></div>
+  <div class="send" id="sendRow">
+    <input id="msg" placeholder="Say something nice" maxlength="140" autocomplete="off">
+    <button class="btn main sm" id="sendBtn">Send</button>
+  </div>
+  <div class="gifts" id="gifts"></div>
+</section>
+
+<!-- GO LIVE -->
+<section class="view" id="v-live">
+  <h2 style="margin-bottom:14px">Your live room</h2>
+  <div class="stage" id="myStage" style="background:rgba(255,255,255,.05)">
+    <video id="cam" autoplay muted playsinline hidden></video>
+    <div class="big" id="myBig" style="color:var(--violet)">You</div>
+  </div>
+  <input class="field" id="roomTitle" placeholder="What is your live about?" maxlength="60" style="margin-top:14px">
+  <select class="field" id="roomRegion" style="margin-top:10px"><option>Nigeria</option><option>USA</option><option>Ghana</option><option>Australia</option><option>Europe</option></select>
+  <div class="row" style="margin:18px 0">
+    <button class="btn main" id="startBtn">Start live</button>
+    <button class="btn out" id="stopBtn" hidden>End live</button>
+    <button class="btn out" id="callBtn">Video chat</button>
+  </div>
+  <div class="panel">
+    <div class="stat"><span>Your earnings (coins)</span><b id="myEarn">0</b></div>
+    <div class="stat"><span>Gifts received</span><b id="myGifts">0</b></div>
+    <div class="stat"><span>Level</span><b id="myLevel">Starter</b></div>
+    <div class="ladder" id="ladder"><i></i><i></i><i></i><i></i></div>
+    <p class="note">Everyone starts at zero. Earnings grow only when viewers send you gifts. No amount is fixed.</p>
+    <div class="chat" id="hostFeed" style="height:120px;margin-top:14px"><p class="note" style="margin:0">Gifts from your viewers show up here.</p></div>
+  </div>
+  <div class="ad"><b>Ad</b>Ads also run in your live room and help the platform pay creators.</div>
+</section>
+
+<!-- WALLET -->
+<section class="view" id="v-wallet">
+  <h2 style="margin-bottom:14px">Wallet</h2>
+  <div class="panel">
+    <div class="stat"><span>Coins for gifts</span><b><i class="coin"></i><span id="walCoins">0</span></b></div>
+    <div class="row" style="margin:14px 0 0">
+      <button class="btn main sm" id="adCoins">Watch an ad, get free coins</button>
+      <button class="btn out sm" id="buyCoins">Buy coins</button>
+    </div>
+    <p class="note">Buying coins will use Paystack and Flutterwave (cards and bank transfer) once payments are connected.</p>
+  </div>
+  <div class="panel">
+    <div class="stat"><span>Withdraw to bank</span><b style="font-size:16px;color:var(--mute)">Soon</b></div>
+    <p class="note">Creators will cash out their earnings to a Nigerian bank account.</p>
+  </div>
+</section>
+
+<!-- OWNER -->
+<section class="view" id="v-owner">
+  <h2 style="margin-bottom:14px">Owner dashboard</h2>
+  <div class="panel">
+    <div class="stat"><span>Your share of gifts (coins)</span><b id="oGift">0</b></div>
+    <div class="stat"><span>Ads watched</span><b id="oAds">0</b></div>
+    <div class="stat"><span>Gifts sent in total</span><b id="oTotal">0</b></div>
+  </div>
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between"><span>Platform share of each gift</span><b id="cutLabel">50%</b></div>
+    <input type="range" id="cut" min="0" max="100" value="50" aria-label="Platform share">
+    <p class="note">You decide this split. Streamers get the rest. No fixed amount is promised to anyone.</p>
+  </div>
+  <div class="panel">
+    <b>Income streams</b>
+    <p class="note">1. Your share of every gift.<br>2. Ad income from banner and rewarded ads (AdMob for apps, AdSense for the website).</p>
+  </div>
+</section>
+
+</div>
+
+<!-- Login / Join -->
+<div class="overlay" id="authBox" role="dialog" aria-label="Log in or join">
+  <div class="modal">
+    <button class="close" id="authClose" aria-label="Close">✕</button>
+    <h3 id="authTitle">Join Void Life</h3>
+    <p class="note" style="margin:0">Create your free account to chat, send gifts and go live.</p>
+    <div class="tabs">
+      <button class="chip on" id="tabJoin">Join</button>
+      <button class="chip" id="tabLogin">Log in</button>
+    </div>
+    <input class="field" id="aName" placeholder="Your name" autocomplete="name" maxlength="24">
+    <input class="field" id="aEmail" type="email" placeholder="Email" autocomplete="email">
+    <input class="field" id="aPass" type="password" placeholder="Password" autocomplete="current-password">
+    <label class="check" id="ageRow"><input type="checkbox" id="aAge"><span>I am 18 or older and agree to the rules and terms.</span></label>
+    <div class="err" id="authErr"></div>
+    <button class="btn main" id="authGo" style="width:100%;justify-content:center;margin-top:8px">Join Void Life</button>
+  </div>
+</div>
+
+<div class="overlay" id="adBox" role="dialog" aria-label="Advertisement">
+  <p class="note">Sample ad. A real advertiser plays here.</p>
+  <div class="count" id="adCount">5</div>
+  <p>Wait to claim your coins</p>
+</div>
+<div id="toast"></div>
+
+<nav><div class="in">
+  <button class="on" data-go="home"><span>🏠</span>Home</button>
+  <button data-go="live"><span>🎙️</span>Go live</button>
+  <button data-go="wallet"><span>💜</span>Wallet</button>
+  <button data-go="owner" id="navOwner" hidden><span>📊</span>Owner</button>
+</div></nav>
+
+<script>
+const $=id=>document.getElementById(id);
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+
+const SB_URL="https://lmpsvmmeqkmdnonqjjld.supabase.co";
+const SB_KEY="sb_publishable_ES6HvUBDjNGIZFm1xc68ng_OGL_Fqxl";
+const DEF={coins:0,cut:50,ownerGift:0,adsWatched:0,totalGifts:0,myEarn:0,myGifts:0};
+const OWNER_HASH="c71f0616929dae1d3d817a93bc4de86be9d5f259987408f969ec2eb1b420ec17";
+async function sha(t){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t.trim().toLowerCase()));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
+const S={...DEF,user:null,uid:null,isOwner:false,mode:"join",stream:null};
+function loadState(uid){Object.assign(S,DEF)}
+function save(){}
+loadState(null);
+
+/* real accounts (Supabase Auth) */
+const sess={get(){try{return JSON.parse(store.get("vln_session")||"null")}catch(e){return null}},set(v){store.set("vln_session",JSON.stringify(v))},clear(){store.del("vln_session")}};
+async function sb(path,opts={}){
+  const r=await fetch(SB_URL+path,{...opts,headers:{apikey:SB_KEY,"Content-Type":"application/json",...(opts.headers||{})}});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(j.msg||j.error_description||j.message||j.error||"Something went wrong");
+  return j;
+}
+function applySession(j){
+  const u=j.user;
+  sess.set({access_token:j.access_token,refresh_token:j.refresh_token,exp:Date.now()+(j.expires_in||3600)*1000});
+  S.uid=u.id;S.user=(u.user_metadata&&u.user_metadata.name)||(u.email||"").split("@")[0]||"Friend";
+  loadState(S.uid);
+  S.isOwner=false;
+  try{sha(u.email||"").then(x=>{S.isOwner=(x===OWNER_HASH);render();if(S.isOwner)loadOwner()})}catch(e){}
+  setTimeout(()=>{loadWallet();loadRooms()},0);
+}
+async function restore(){
+  const s=sess.get();if(!s)return;
+  try{
+    let j;
+    if(Date.now()<s.exp-60000){
+      const u=await sb("/auth/v1/user",{headers:{Authorization:"Bearer "+s.access_token}});
+      j={...s,user:u,expires_in:(s.exp-Date.now())/1000};
+    }else{
+      j=await sb("/auth/v1/token?grant_type=refresh_token",{method:"POST",body:JSON.stringify({refresh_token:s.refresh_token})});
+    }
+    applySession(j);render();
+  }catch(e){if(!(e instanceof TypeError))sess.clear()}
+}
+function friendly(e){
+  if(e instanceof TypeError)return "No internet connection. Try again.";
+  const m=(e.message||"").toLowerCase();
+  if(m.includes("invalid login"))return "Wrong email or password.";
+  if(m.includes("already registered")||m.includes("already been registered"))return "This email already has an account. Tap Log in.";
+  if(m.includes("not confirmed"))return "Confirm your email first, then log in.";
+  if(m.includes("password"))return "Password must be at least 6 characters.";
+  if(m.includes("rate limit")||m.includes("too many"))return "Too many tries. Wait a few minutes.";
+  return e.message||"Something went wrong";
+}
+
+/* data helpers */
+async function token(){
+  const x=sess.get();if(!x)return null;
+  if(Date.now()>x.exp-60000){
+    const j=await sb("/auth/v1/token?grant_type=refresh_token",{method:"POST",body:JSON.stringify({refresh_token:x.refresh_token})});
+    sess.set({access_token:j.access_token,refresh_token:j.refresh_token,exp:Date.now()+(j.expires_in||3600)*1000});
+    return j.access_token;
+  }
+  return x.access_token;
+}
+async function api(path,opts={}){
+  const t=await token();
+  const h=t?{Authorization:"Bearer "+t}:{};
+  return sb(path,{...opts,headers:{...h,...(opts.headers||{})}});
+}
+
+const rooms=[
+ {n:"Ada_Lagos",c:"Lagos, Nigeria",r:"Nigeria",t:"Afrobeats night, come vibe",v:1240,g:["#ff4d9d","#7a2a9e"]},
+ {n:"Kwame",c:"Accra, Ghana",r:"Ghana",t:"Learning Yoruba with you",v:830,g:["#a56cf0","#3b1e78"]},
+ {n:"Sophie",c:"London, UK",r:"Europe",t:"Ask me about London",v:615,g:["#5eead4","#1f6f8b"]},
+ {n:"Chidi",c:"Abuja, Nigeria",r:"Nigeria",t:"Comedy and jokes",v:2100,g:["#f97316","#be185d"]},
+ {n:"Mia",c:"Texas, USA",r:"USA",t:"Chat with a stranger",v:402,g:["#ec4899","#6d28d9"]},
+ {n:"Jack",c:"Sydney, Australia",r:"Australia",t:"Sunrise chat from Sydney",v:356,g:["#38bdf8","#4c1d95"]},
+ {n:"Tunde",c:"Port Harcourt, Nigeria",r:"Nigeria",t:"Football talk, live",v:978,g:["#22c55e","#0f766e"]},
+ {n:"Lena",c:"Berlin, Germany",r:"Europe",t:"German and English swap",v:289,g:["#8b5cf6","#be185d"]}
+];
+let GIFTS=[
+ {id:"rose",n:"Rose",e:"🌹",p:10},{id:"flowers",n:"Flowers",e:"💐",p:20},{id:"butterfly",n:"Butterfly",e:"🦋",p:30},
+ {id:"glasses",n:"Glasses",e:"🕶️",p:40},{id:"mustache",n:"Mustache",e:"🥸",p:40},{id:"hat",n:"Hat",e:"🎩",p:50},
+ {id:"clothes",n:"Clothes",e:"👕",p:60},{id:"medal",n:"Medal",e:"🏅",p:100},{id:"bear",n:"Bear",e:"🐻",p:150},
+ {id:"horse",n:"Horse",e:"🐴",p:250},{id:"lion",n:"Lion",e:"🦁",p:300},{id:"moneybag",n:"Money bag",e:"💰",p:500},
+ {id:"rocket",n:"Rocket",e:"🚀",p:500},{id:"tesla",n:"Tesla",e:"⚡",p:700},{id:"bmw",n:"BMW",e:"🚗",p:800},
+ {id:"benz",n:"Benz",e:"🚘",p:900},{id:"rangerover",n:"Range Rover",e:"🚙",p:1000},{id:"porsche",n:"Porsche",e:"🏎️",p:1200},
+ {id:"cybertruck",n:"Cybertruck",e:"🛻",p:1500},{id:"house",n:"House",e:"🏠",p:2000},{id:"ferrari",n:"Ferrari",e:"🏎️",p:2500},
+ {id:"lamborghini",n:"Lamborghini",e:"🏎️",p:3000},{id:"rollsroyce",n:"Rolls-Royce",e:"🚘",p:4000},
+ {id:"bugatti",n:"Bugatti",e:"🏎️",p:5000},{id:"flyingcar",n:"Flying car",e:"🛸",p:6000},
+ {id:"universe",n:"Universe",e:"🌌",p:20000},{id:"voidlife",n:"Void Life",e:"🔮",p:50000}
+];
+const levels=[["Starter",0],["Rising",5],["Star",25],["Elite",100]];
+const regions=["All","Nigeria","USA","Ghana","Australia","Europe"];
+const PAL=[["#ff4d9d","#7a2a9e"],["#a56cf0","#3b1e78"],["#5eead4","#1f6f8b"],["#f97316","#be185d"],["#ec4899","#6d28d9"],["#38bdf8","#4c1d95"],["#22c55e","#0f766e"],["#8b5cf6","#be185d"]];
+const fakeUsers=["Bisi","John","Amaka","Lola","Sam","Efe","Zara"];
+const fakeMsgs=["Hello from Abuja!","Love this","Greetings from London","Nice one","Wow","Where are you from?","Keep going","🔥🔥"];
+let region="All",chatTimer=null,cur=null,wPoll=null,hPoll=null,hostTimer=null,live=[];
+function gradFor(id){let h=0;for(const c of String(id))h=(h*31+c.charCodeAt(0))>>>0;return PAL[h%PAL.length]}
+function gid(id){return GIFTS.find(g=>g.id===id)||{id:id,n:id,e:"🎁",p:0}}
+
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.i);toast.i=setTimeout(()=>t.classList.remove("on"),2300)}
+function go(v){
+  if(v==="owner"&&!S.isOwner){toast("Owner only");v="home"}
+  document.querySelectorAll(".view").forEach(x=>x.classList.remove("on"));
+  $("v-"+v).classList.add("on");
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===v||(v==="watch"&&b.dataset.go==="home")));
+  if(v!=="watch"){clearInterval(chatTimer);if(wPoll){wPoll.stop();wPoll=null}}
+  if(v==="owner")loadOwner();
+  if(v==="wallet")loadWallet();
+  if(v==="home")loadRooms();
+  window.scrollTo(0,0);
+}
+function render(){
+  $("coinTop").textContent=S.coins;$("walCoins").textContent=S.coins;
+  $("myEarn").textContent=S.myEarn;$("myGifts").textContent=S.myGifts;
+  let li=0;levels.forEach((l,i)=>{if(S.myGifts>=l[1])li=i});
+  $("myLevel").textContent=levels[li][0];
+  [...$("ladder").children].forEach((e,i)=>e.classList.toggle("on",i<=li));
+  $("oGift").textContent=Math.round(S.ownerGift);$("oAds").textContent=S.adsWatched;$("oTotal").textContent=S.totalGifts;
+  $("cut").value=S.cut;$("cutLabel").textContent=S.cut+"%";
+  const u=!!S.user;
+  $("navOwner").hidden=!S.isOwner;
+  $("loginBtn").hidden=u;$("joinBtn").hidden=u;$("logoutBtn").hidden=!u;$("coinBtn").hidden=!u;
+  $("lead").textContent=u?`Welcome, ${S.user}. Pick a room, or go live and start growing your community.`:"Discover live conversations, meet new people, share your talent, and build your community, starting in Nigeria and reaching everywhere.";
+}
+
+/* real data from the database */
+async function loadWallet(){
+  if(!S.uid)return;
+  try{
+    const r=await api(`/rest/v1/wallets?select=coins,earnings,gifts_received&user_id=eq.${S.uid}`);
+    if(r[0]){S.coins=r[0].coins;S.myEarn=r[0].earnings;S.myGifts=r[0].gifts_received;render()}
+  }catch(e){}
+}
+async function loadOwner(){
+  if(!S.isOwner)return;
+  try{
+    const r=await api("/rest/v1/platform?select=cut,revenue,ads,total_gifts&id=eq.1");
+    if(r[0]){S.cut=r[0].cut;S.ownerGift=r[0].revenue;S.adsWatched=r[0].ads;S.totalGifts=r[0].total_gifts;render()}
+  }catch(e){}
+}
+async function loadGifts(){
+  try{
+    const r=await sb("/rest/v1/gifts?select=id,name,emoji,price&order=price.asc",{headers:{}});
+    if(Array.isArray(r)&&r.length){GIFTS=r.map(x=>({id:x.id,n:x.name,e:x.emoji,p:x.price}));buildGifts()}
+  }catch(e){}
+}
+async function loadRooms(){
+  try{
+    const since=encodeURIComponent(new Date(Date.now()-6*3600e3).toISOString());
+    const r=await api(`/rest/v1/rooms?select=id,host,title,region,created_at&live=eq.true&created_at=gt.${since}&order=created_at.desc&limit=30`);
+    const names={};
+    if(S.uid&&r.length){
+      const ids=[...new Set(r.map(x=>x.host))].join(",");
+      const p=await api(`/rest/v1/profiles?select=id,name&id=in.(${ids})`);
+      p.forEach(x=>names[x.id]=x.name);
+    }
+    live=r.map(x=>({id:x.id,host:x.host,n:names[x.host]||"Creator",c:x.region||"Nigeria",r:x.region||"Nigeria",t:x.title,v:0,g:gradFor(x.id)}));
+    buildGrid();
+  }catch(e){}
+}
+
+function buildGrid(){
+  $("grid").innerHTML="";
+  const all=live.map(x=>({...x,real:true})).concat(rooms.map(x=>({...x,real:false})));
+  all.forEach(s=>{
+    if(region!=="All"&&s.r!==region)return;
+    const b=document.createElement("button");b.className="room";
+    const tag=s.real?'<span class="tag">LIVE</span>':'<span class="tag" style="background:rgba(0,0,0,.6)">DEMO</span>';
+    const views=s.real?"":`<span class="views">${s.v.toLocaleString()}</span>`;
+    b.innerHTML=`<div class="thumb" style="background:linear-gradient(160deg,${s.g[0]},${s.g[1]})">${s.n[0]}${tag}${views}</div><div class="meta"><b></b><small></small></div>`;
+    b.querySelector("b").textContent=s.n;b.querySelector("small").textContent=s.c+" · "+s.t;
+    b.onclick=()=>watch(s);$("grid").appendChild(b);
+  });
+  $("demoBadge").textContent=live.length?"LIVE + DEMO":"DEMO FEED";
+}
+function buildGifts(){
+  $("gifts").innerHTML="";
+  GIFTS.forEach(g=>{
+    const b=document.createElement("button");b.className="gbtn";
+    b.innerHTML=`<span>${g.e}</span><em></em><small><i class="coin sm"></i> ${g.p.toLocaleString()}</small>`;
+    b.querySelector("em").textContent=g.n;
+    b.onclick=()=>sendGift(g);$("gifts").appendChild(b);
+  });
+}
+function addChat(u,t,g){const p=document.createElement("p");if(g)p.className="gift";p.innerHTML="<b></b> <span></span>";p.firstChild.textContent=u;p.lastChild.textContent=t;const c=$("chat");c.appendChild(p);c.scrollTop=c.scrollHeight}
+function addFeed(t){const p=document.createElement("p");p.className="gift";p.textContent=t;const c=$("hostFeed");c.appendChild(p);c.scrollTop=c.scrollHeight}
+function fly(e,n,stageId,p){
+  const st=$(stageId||"stage");
+  if(p>=20000){const fl=document.createElement("div");fl.className="flash";st.appendChild(fl);setTimeout(()=>fl.remove(),1700)}
+  const f=document.createElement("div");f.className="float";f.innerHTML=e+"<small></small>";f.querySelector("small").textContent=n;
+  f.style.fontSize=p>=20000?"140px":p>=1000?"86px":"46px";
+  st.appendChild(f);setTimeout(()=>f.remove(),1700);
+}
+function makePoller(roomId,stageId,cb){
+  let last=-1,busy=false;
+  async function tick(){
+    if(!S.uid||busy)return;busy=true;
+    try{
+      if(last<0){
+        const r=await api(`/rest/v1/gift_events?select=id&room_id=eq.${roomId}&order=id.desc&limit=1`);
+        last=r[0]?r[0].id:0;return;
+      }
+      const r=await api(`/rest/v1/gift_events?select=id,sender_name,gift_id&room_id=eq.${roomId}&id=gt.${last}&order=id.asc&limit=20`);
+      r.forEach(e=>{last=e.id;const g=gid(e.gift_id);fly(g.e,g.n,stageId,g.p);cb(e,g)});
+      if(r.length)loadWallet();
+    }catch(x){}finally{busy=false}
+  }
+  const timer=setInterval(tick,2000);tick();
+  return {stop(){clearInterval(timer)},now:tick};
+}
+function watch(s){
+  cur=s;
+  $("wName").textContent=s.n;$("wSub").textContent=s.c+" · "+(s.real?"live now":s.v.toLocaleString()+" watching");
+  $("wBig").textContent=s.n[0];$("stage").style.background=`linear-gradient(160deg,${s.g[0]},${s.g[1]})`;
+  $("chat").innerHTML="";addChat("Void Life","Be kind. Report anyone who breaks the rules.");
+  $("vnote").hidden=!s.real;$("sendRow").style.display=s.real?"none":"flex";
+  go("watch");
+  clearInterval(chatTimer);if(wPoll){wPoll.stop();wPoll=null}
+  if(s.real){
+    wPoll=makePoller(s.id,"stage",(e,g)=>addChat(e.sender_name||"Someone","sent a "+g.n+" "+g.e,true));
+    if(!S.user)addChat("Void Life","Join to send gifts.");
+  }else{
+    chatTimer=setInterval(()=>addChat(fakeUsers[Math.random()*fakeUsers.length|0],fakeMsgs[Math.random()*fakeMsgs.length|0]),2800);
+  }
+}
+function needLogin(){if(S.user)return false;openAuth("join");toast("Join first to continue");return true}
+async function sendGift(g){
+  if(needLogin())return;
+  if(!cur||!cur.real){toast("This is a demo room. Gifts work in real live rooms.");return}
+  if(S.coins<g.p){toast("Not enough coins. Watch an ad for free coins.");go("wallet");return}
+  try{
+    await api("/rest/v1/rpc/send_gift",{method:"POST",body:JSON.stringify({p_room:cur.id,p_gift:g.id})});
+    await loadWallet();if(wPoll)wPoll.now();
+  }catch(e){toast(friendly(e))}
+}
+function runAd(done){
+  let n=5;$("adCount").textContent=n;$("adBox").classList.add("on");
+  const t=setInterval(()=>{n--;$("adCount").textContent=n;if(n<=0){clearInterval(t);$("adBox").classList.remove("on");done()}},1000);
+}
+
+/* auth */
+function openAuth(mode){
+  S.mode=mode;
+  $("authBox").classList.add("on");
+  const j=mode==="join";
+  $("authTitle").textContent=j?"Join Void Life":"Log in";
+  $("authGo").textContent=j?"Join Void Life":"Log in";
+  $("tabJoin").classList.toggle("on",j);$("tabLogin").classList.toggle("on",!j);
+  $("ageRow").style.display=j?"flex":"none";$("aName").style.display=j?"":"none";$("aPass").autocomplete=j?"new-password":"current-password";
+  $("authErr").textContent="";
+}
+$("loginBtn").onclick=()=>openAuth("login");
+$("joinBtn").onclick=()=>openAuth("join");
+$("tabJoin").onclick=()=>openAuth("join");
+$("tabLogin").onclick=()=>openAuth("login");
+$("authClose").onclick=()=>$("authBox").classList.remove("on");
+$("authGo").onclick=async()=>{
+  const n=$("aName").value.trim(),e=$("aEmail").value.trim(),p=$("aPass").value,join=S.mode==="join";
+  const err=$("authErr");err.style.color="";
+  if(join&&!n){err.textContent="Enter your name.";return}
+  if(!e||!e.includes("@")){err.textContent="Enter a valid email address.";return}
+  if(p.length<6){err.textContent="Password needs at least 6 characters.";return}
+  if(join&&!$("aAge").checked){err.textContent="You must be 18 or older to join.";return}
+  const btn=$("authGo");btn.disabled=true;const old=btn.textContent;btn.textContent="Please wait...";err.textContent="";
+  try{
+    let j;
+    if(join){
+      j=await sb("/auth/v1/signup",{method:"POST",body:JSON.stringify({email:e,password:p,data:{name:n}})});
+      if(!j.access_token){err.style.color="#5eead4";err.textContent="Account created. Check your email, tap the confirmation link, then log in.";return}
+    }else{
+      j=await sb("/auth/v1/token?grant_type=password",{method:"POST",body:JSON.stringify({email:e,password:p})});
+    }
+    applySession(j);$("authBox").classList.remove("on");$("aPass").value="";render();toast("Welcome, "+S.user);
+  }catch(x){err.textContent=friendly(x)}
+  finally{btn.disabled=false;btn.textContent=old}
+};
+$("logoutBtn").onclick=async()=>{
+  const x=sess.get();
+  if(x){try{await sb("/auth/v1/logout",{method:"POST",headers:{Authorization:"Bearer "+x.access_token}})}catch(e){}}
+  sess.clear();S.user=null;S.uid=null;S.isOwner=false;loadState(null);render();toast("Logged out");
+};
+
+/* wiring */
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>{if(b.dataset.go==="live"&&needLogin())return;go(b.dataset.go)}));
+$("exploreBtn").onclick=()=>{go("home");$("rooms").scrollIntoView({behavior:"smooth"})};
+$("tGlobal").onclick=()=>{$("rooms").scrollIntoView({behavior:"smooth"});toast("Pick a region to meet people")};
+$("coinBtn").onclick=()=>go("wallet");
+$("backHome").onclick=()=>go("home");
+$("sendBtn").onclick=()=>{if(needLogin())return;const v=$("msg").value.trim();if(!v)return;addChat(S.user,v);$("msg").value=""};
+$("msg").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();$("sendBtn").click()}});
+$("adCoins").onclick=()=>{
+  if(needLogin())return;
+  runAd(async()=>{
+    try{await api("/rest/v1/rpc/claim_ad_coins",{method:"POST",body:"{}"});await loadWallet();toast("You got 20 free coins")}
+    catch(e){toast(friendly(e))}
+  });
+};
+$("buyCoins").onclick=()=>toast("Payments connect later with Paystack");
+$("callBtn").onclick=()=>toast("Video comes in the next update");
+$("cut").oninput=e=>{S.cut=+e.target.value;$("cutLabel").textContent=S.cut+"%"};
+$("cut").onchange=async e=>{
+  try{await api("/rest/v1/rpc/set_cut",{method:"POST",body:JSON.stringify({p_cut:+e.target.value})});toast("Split saved")}
+  catch(x){toast(friendly(x))}
+};
+function stopCam(){if(S.stream){S.stream.getTracks().forEach(t=>t.stop());S.stream=null}$("cam").hidden=true;$("myBig").hidden=false}
+$("startBtn").onclick=async()=>{
+  if(needLogin())return;
+  const btn=$("startBtn");btn.disabled=true;
+  const title=$("roomTitle").value.trim()||(S.user+"'s live");
+  try{
+    S.stream=await navigator.mediaDevices.getUserMedia({video:true,audio:false});
+    $("cam").srcObject=S.stream;$("cam").hidden=false;$("myBig").hidden=true;
+  }catch(e){toast("Camera not allowed. Going live without video.")}
+  try{
+    const r=await api("/rest/v1/rooms",{method:"POST",headers:{Prefer:"return=representation"},body:JSON.stringify({host:S.uid,title:title,region:$("roomRegion").value})});
+    S.roomId=r[0].id;
+  }catch(e){toast(friendly(e));stopCam();btn.disabled=false;return}
+  btn.disabled=false;$("startBtn").hidden=true;$("stopBtn").hidden=false;
+  $("hostFeed").innerHTML="";addFeed("You are live. Gifts will show here.");
+  if(hPoll)hPoll.stop();
+  hPoll=makePoller(S.roomId,"myStage",(e,g)=>addFeed((e.sender_name||"Someone")+" sent a "+g.n+" "+g.e));
+  clearInterval(hostTimer);hostTimer=setInterval(loadWallet,5000);
+  toast("You are live");loadRooms();
+};
+$("stopBtn").onclick=async()=>{
+  stopCam();
+  if(hPoll){hPoll.stop();hPoll=null}
+  clearInterval(hostTimer);
+  if(S.roomId){try{await api(`/rest/v1/rooms?id=eq.${S.roomId}`,{method:"PATCH",body:JSON.stringify({live:false})})}catch(e){}S.roomId=null}
+  $("startBtn").hidden=false;$("stopBtn").hidden=true;toast("Live ended");loadRooms();
+};
+regions.forEach(r=>{const b=document.createElement("button");b.className="chip"+(r===region?" on":"");b.textContent=r;b.onclick=()=>{region=r;document.querySelectorAll("#chips .chip").forEach(c=>c.classList.toggle("on",c.textContent===r));buildGrid()};$("chips").appendChild(b)});
+buildGifts();buildGrid();render();restore();loadGifts();loadRooms();
+setInterval(()=>{if($("v-home").classList.contains("on"))loadRooms()},15000);
+</script>
+</body>
+</html>
